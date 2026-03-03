@@ -12,10 +12,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.get('/error-test', (req, res) => {
-  throw new Error('Test Error'); // This triggers your middleware
-});
-
 app.use(express.json()); 
 
 app.post('/submit', (req, res) => {
@@ -33,7 +29,16 @@ app.get('/about', (req, res) => {
     res.send('About Us');
 });
 
+const items = ['Apple','Banana','Orange'];
+app.get('/items', (req, res) => {
+    res.json(items);
+});
 
+app.post('/items', (req, res) => {
+  const newItem = req.body.item;
+  items.push(newItem);
+  res.json(items);
+});
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
